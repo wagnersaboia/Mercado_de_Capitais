@@ -1,3 +1,16 @@
+First we calculate our μ, just the mean of each column in X:
+
+mu = mean(X, 1)
+Having found our mean, we can now calculate the covariance matrix:
+
+function covariance(x, mu)
+  n = length(x[:,1])
+  (x .- mu)' * (x .- mu) ./ n
+end
+
+sigma = covariance(X, mu)
+
+
 
 Resultado = Pontos_Interiores(A,b,c)
 Resultado[3][1:5]'
