@@ -1,4 +1,54 @@
-# This is a test
-a = [1 1 3 4 6]
-b = [2 4 6 7 8]
-@show a + b
+
+Resultado = Pontos_Interiores(A,b,c)
+Resultado[3][1:5]'
+
+##############
+m = Model(solver = ClpSolver())
+s = 500
+n = 4
+@variable(m,x[1:2*s+n+2]>=0)
+
+@objective(m, Max, (c'*x)[1])
+
+@constraint(m,  A*x .<= b)
+
+solve(m)
+
+getobjectivevalue(m)
+getvalue(x)
+getvalue(x)[1:5]
+
+########
+########
+##############
+rd = 0.1/100
+alfa = 0.95
+W0 = 1
+ni = 5/100
+S = 10
+n = 4
+
+
+r1 = [zeros(S) rand(dist,S)']
+m = Model(solver = ClpSolver())
+@variable(m,x[1:n] >= 0)
+@variable(m,W0 >= d >= 0)
+@variable(m,z >= 0)
+@variable(m,q[1:S] >= 0)
+@variable(m,W1[1:S] >= 0)
+
+@objective(m, Max, (1/S)*(W1'*ones(S))[1])
+
+@constraint(m, x'*ones(n) - d .== W0)
+@constraint(m, W1[1:S] .== (1. .+ r1)*x - (1+rd)*d.*ones(S)) #(1. .+ r1) exp(r1)
+@constraint(m, (1/S)*((W1'*ones(S))[1] - (S*z - (q'ones(S))[1]/(1.-alfa))) <= ni*W0)
+@constraint(m, q[1:S] .>= z - W1[1:S])
+
+solve(m)
+
+getobjectivevalue(m)
+getvalue(x)
+getvalue(d)
+getvalue(z)
+getvalue(W1)
+getvalue(q)
