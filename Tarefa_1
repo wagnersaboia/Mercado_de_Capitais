@@ -1,3 +1,8 @@
+dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:
+dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:
+μ = [0.003334853,0.007157464,0.006317372,0.006317372,0.006317372]
+dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:
+dist = MvNormal(μ,Σ)
 First we calculate our μ, just the mean of each column in X:
 
 mu = mean(X, 1)
