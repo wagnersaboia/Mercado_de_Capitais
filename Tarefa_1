@@ -1,8 +1,19 @@
-dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:
-dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:
+# workspace()
+#Pkg.add("Clp")
+#Pkg.build("JuMP")
+#Pkg.add("Distributions")
+#using Clp
+using Distributions
+using JuMP 
+srand(123) # Setting the seed
 μ = [0.003334853,0.007157464,0.006317372,0.006317372,0.006317372]
-dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:dist = MvNormal(μ,Σ)First we calculate our μ, just the mean of each column in X:
+Σ = [0.001899971 0.001980483 0.001900386 0.001980483 0.001900386; 0.001380483 0.003552800 0.006563507 0.006980483 0.005900386;     0.001980483 0.006552800 0.002563307 0.001980483 0.009900686;     0.001980483 0.002552800 0.002563507 0.005980483 0.006900686;     0.008900386 0.005563507 0.001993681 0.004980483 0.001900386]
+Σ = Σ'Σ
 dist = MvNormal(μ,Σ)
+
+rand(dist,100)
+
+
 First we calculate our μ, just the mean of each column in X:
 
 mu = mean(X, 1)
