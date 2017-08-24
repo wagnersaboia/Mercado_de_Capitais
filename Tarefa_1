@@ -1,18 +1,39 @@
+Pkg.update()
+
 # workspace()
 #Pkg.add("Clp")
 #Pkg.build("JuMP")
 #Pkg.add("Distributions")
+#Pkg.add("DataFrames")
+# Pkg.add("Gadfly")
 #using Clp
 using Distributions
-using JuMP 
+using JuMP
+using DataFrames
+using Gadfly
 srand(123) # Setting the seed
 μ = [0.003334853,0.007157464,0.006317372,0.006317372,0.006317372]
-Σ = [0.001899971 0.001980483 0.001900386 0.001980483 0.001900386; 0.001380483 0.003552800 0.006563507 0.006980483 0.005900386;     0.001980483 0.006552800 0.002563307 0.001980483 0.009900686;     0.001980483 0.002552800 0.002563507 0.005980483 0.006900686;     0.008900386 0.005563507 0.001993681 0.004980483 0.001900386]
+Σ = [0.001899971 0.001980483 0.001900386 0.001980483 0.001900386;     0.001380483 0.003552800 0.006563507 0.006980483 0.005900386;     0.001980483 0.006552800 0.002563307 0.001980483 0.009900686;     0.001980483 0.002552800 0.002563507 0.005980483 0.006900686;     0.008900386 0.005563507 0.001993681 0.004980483 0.001900386]
 Σ = Σ'Σ
 dist = MvNormal(μ,Σ)
 
-rand(dist,100)
+n=5
+function Markowitz(n,Σ,μ,R)
+m = Model(solver = ClpSolver())
+@variable(m,x[1:n] >= 0)
+@objective(m, Min, x'*Σ*x)
+@constraint(m, x'*ones(n) .== 1)
+@constraint(m, μ'*x .== R) # variar o 0.10
+solve(m)
+# getobjectivevalue(m)
+# getvalue(x)    
+return(getobjectivevalue(m))
+end
 
+Retornos = collect(linspace(0,1,100+1))
+# sigmas   = [Markowitz(n,Σ,μ,Retornos[i]) for i=1:length(Retornos)]
+sigmas = Retornos+1#plot(sigmas', Retornos')
+plot(x=rand(10), y=rand(10))
 
 First we calculate our μ, just the mean of each column in X:
 
