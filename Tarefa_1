@@ -32,7 +32,8 @@ end
 
 Retornos = collect(linspace(0,1,100+1))
 # sigmas   = [Markowitz(n,Σ,μ,Retornos[i]) for i=1:length(Retornos)]
-sigmas = Retornos+1#plot(sigmas', Retornos')
+sigmas = Retornos+1
+#plot(x = sigmas,y = Retornos)
 plot(x=rand(10), y=rand(10))
 
 First we calculate our μ, just the mean of each column in X:
