@@ -42,3 +42,18 @@ plot(x = sigmas,y = Rets)
 
 plot(layer(x=sigmas,y = Rets .+ 0.001,Geom.point),
      layer(x=sigmas,y = Rets,Geom.point))
+
+function MaxSharpeRatio (n,Σ,μ,Rf)
+  i = 1
+  while ((Rets[i+1]-Rf)/sigmas[i+1]<(Rets[i]-Rf)/sigmas[i])
+    i = i + 1
+  end
+
+  m = Model(solver=GurobiSolver(Presolve=0))
+  @variable(m,x[1:n])
+  @objective(m, Min, x'*Σ*x)
+  @constraint(m, x'*ones(n) == 1)
+  @constraint(m, μ*x .== Rets[i])
+  solve(m)
+  return(getvalue(x))
+end
