@@ -43,7 +43,7 @@ plot(x = sigmas,y = Rets)
 plot(layer(x=sigmas,y = Rets .+ 0.001,Geom.point),
      layer(x=sigmas,y = Rets,Geom.point))
 
-function MaxSharpeRatio (n,Σ,μ,Rf)
+function MaxSharpeRatio(n,Σ,μ,Rf)
   i = 1
   while ((Rets[i+1]-Rf)/sigmas[i+1]<(Rets[i]-Rf)/sigmas[i])
     i = i + 1
@@ -57,3 +57,4 @@ function MaxSharpeRatio (n,Σ,μ,Rf)
   solve(m)
   return(getvalue(x))
 end
+MaxSharpeRatio(n,Σ,μ,Rf)
