@@ -45,10 +45,11 @@ plot(x = sigmas2,y = Rets2)
 # Insira o valor de Rf em % a.a.
 Rf = 0.07
 Rf = (1+Rf)^(1/252)-1
-Rets1 = linspace(-.001,.002,1000+1)
+Rets3 = linspace(-.001,.002,1000+1)
+sigmas3 = [Markowitz2(n,Σ,μ,Rets3[i]) for i=1:length(Rets2)]
 function MaxSharpeRatio(n,Σ,μ,Rf)
   i = 1
-  while ((Rets3[i+1]-Rf)/sigmas[i+1]<(Rets3[i]-Rf)/sigmas[i])
+  while ((Rets3[i+1]-Rf)/sigmas3[i+1]<(Rets3[i]-Rf)/sigmas3[i])
     i = i + 1
   end
 
@@ -62,3 +63,5 @@ function MaxSharpeRatio(n,Σ,μ,Rf)
 end
 
 X = MaxSharpeRatio(n,Σ,μ,Rf)
+x = linspace(1,5,5)
+plot(x = x, y = X)
