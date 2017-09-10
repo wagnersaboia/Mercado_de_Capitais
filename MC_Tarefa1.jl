@@ -1,4 +1,4 @@
-# Lista1 - Mercado_de_Capitais
+2# Lista1 - Mercado_de_Capitais
 # 245 retornos diarios entre 05/09/2016 e 01/09/2017 das acoes ABEV3, EMBR3, GOLL4, PETR4 e VALE5.
 
 using JuMP
@@ -37,17 +37,18 @@ function Markowitz2(n,Σ,μ,R)
   return(getobjectivevalue(m))
 end
 
-Rets2 = collect(linspace(-.001,.002,1000+1))
-sigmas2 = [Markowitz2(n,Σ,μ,Rets[i]) for i=1:length(Rets)]
+Rets2 = linspace(-.001,.002,1000+1)
+sigmas2 = [Markowitz2(n,Σ,μ,Rets2[i]) for i=1:length(Rets2)]
 plot(x = sigmas2,y = Rets2)
 
 # Questao 4
 # Insira o valor de Rf em % a.a.
 Rf = 0.07
 Rf = (1+Rf)^(1/252)-1
+Rets1 = linspace(-.001,.002,1000+1)
 function MaxSharpeRatio(n,Σ,μ,Rf)
   i = 1
-  while ((Rets[i+1]-Rf)/sigmas[i+1]<(Rets[i]-Rf)/sigmas[i])
+  while ((Rets3[i+1]-Rf)/sigmas[i+1]<(Rets3[i]-Rf)/sigmas[i])
     i = i + 1
   end
 
@@ -55,7 +56,7 @@ function MaxSharpeRatio(n,Σ,μ,Rf)
   @variable(m,x[1:n])
   @objective(m, Min, x'*Σ*x)
   @constraint(m, x'*ones(n) == 1)
-  @constraint(m, μ*x .== Rets[i])
+  @constraint(m, μ*x .== Rets3[i])
   solve(m)
   return getvalue(x)
 end
