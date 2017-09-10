@@ -1,15 +1,17 @@
-using JuMP, Gurobi
-using Distributions,Gadfly
-using DataFrames
+# Lista1 - Mercado_de_Capitais
+# 245 retornos diarios entre 05/09/2016 e 01/09/2017 das acoes ABEV3, EMBR3, GOLL4, PETR4 e VALE5.
 
-Retornos = readdlm("C:\\Users\\wagne\\AppData\\Local\\JuliaPro-0.6.0.1\\Mercado_de_Capitais\\Retornos.txt",'\t')
-Retornos = Retornos[:,1:6]
+using JuMP
+using Gurobi
+using Gadfly
 
-μ = mean(Retornos[:,2:6],1)
-Σ = cov(Retornos[:,2:6])
+Retornos = readdlm("C:/Users/wagne/AppData/Local/JuliaPro-0.6.0.1/Mercado_de_Capitais/Retornos.txt",Float64)
 
-n=5
+μ = mean(Retornos,1)
+Σ = cov(Retornos)
+n = size(Retornos)[2]
 
+# Questao 2
 function Markowitz1(n,Σ,μ,R)
   m = Model(solver=GurobiSolver(Presolve=0))
   @variable(m,x[1:n])
@@ -20,11 +22,11 @@ function Markowitz1(n,Σ,μ,R)
   return(getobjectivevalue(m))
 end
 
-Rets = collect(linspace(-.001,.002,1000+1))
-sigmas = [Markowitz1(n,Σ,μ,Rets[i]) for i=1:length(Rets)]
-plot(x = sigmas,y = Rets)
+Rets1 = linspace(-.001,.002,1000+1)
+sigmas1 = [Markowitz1(n,Σ,μ,Rets1[i]) for i=1:length(Rets1)]
+plot(x = sigmas1,y = Rets1)
 
-
+# Questao 3
 function Markowitz2(n,Σ,μ,R)
   m = Model(solver=GurobiSolver(Presolve=0))
   @variable(m,x[1:n])
@@ -35,14 +37,14 @@ function Markowitz2(n,Σ,μ,R)
   return(getobjectivevalue(m))
 end
 
-Rets = collect(linspace(-.001,.002,1000+1))
-sigmas = [Markowitz2(n,Σ,μ,Rets[i]) for i=1:length(Rets)]
-plot(x = sigmas,y = Rets)
+Rets2 = collect(linspace(-.001,.002,1000+1))
+sigmas2 = [Markowitz2(n,Σ,μ,Rets[i]) for i=1:length(Rets)]
+plot(x = sigmas2,y = Rets2)
 
-
-plot(layer(x=sigmas,y = Rets .+ 0.001,Geom.point),
-     layer(x=sigmas,y = Rets,Geom.point))
-
+# Questao 4
+# Insira o valor de Rf em % a.a.
+Rf = 0.07
+Rf = (1+Rf)^(1/252)-1
 function MaxSharpeRatio(n,Σ,μ,Rf)
   i = 1
   while ((Rets[i+1]-Rf)/sigmas[i+1]<(Rets[i]-Rf)/sigmas[i])
@@ -55,6 +57,7 @@ function MaxSharpeRatio(n,Σ,μ,Rf)
   @constraint(m, x'*ones(n) == 1)
   @constraint(m, μ*x .== Rets[i])
   solve(m)
-  return(getvalue(x))
+  return getvalue(x)
 end
-MaxSharpeRatio(n,Σ,μ,Rf)
+
+X = MaxSharpeRatio(n,Σ,μ,Rf)
