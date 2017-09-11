@@ -1,4 +1,4 @@
-# Lista1 - Mercado_de_Capitais
+# Lista1 - Mercado_de_Capitais - Wagner Saboia de Abreu 1713877
 # 245 retornos diarios entre 05/09/2016 e 01/09/2017 das acoes ABEV3, EMBR3, GOLL4, PETR4 e VALE5.
 
 using JuMP
@@ -61,5 +61,4 @@ function MaxSharpeRatio(n,Σ,μ,Rf)
 end
 
 X = MaxSharpeRatio(n,Σ,μ,Rf)
-x = linspace(1,5,5)
-plot(x = x, y = X)
+plot(x = linspace(1,5,5), y = X)
