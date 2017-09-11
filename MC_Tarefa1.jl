@@ -1,4 +1,4 @@
-2# Lista1 - Mercado_de_Capitais
+# Lista1 - Mercado_de_Capitais
 # 245 retornos diarios entre 05/09/2016 e 01/09/2017 das acoes ABEV3, EMBR3, GOLL4, PETR4 e VALE5.
 
 using JuMP
@@ -6,7 +6,6 @@ using Gurobi
 using Gadfly
 
 Retornos = readdlm("C:/Users/wagne/AppData/Local/JuliaPro-0.6.0.1/Mercado_de_Capitais/Retornos.txt",Float64)
-
 μ = mean(Retornos,1)
 Σ = cov(Retornos)
 n = size(Retornos)[2]
@@ -52,7 +51,6 @@ function MaxSharpeRatio(n,Σ,μ,Rf)
   while ((Rets3[i+1]-Rf)/sigmas3[i+1]<(Rets3[i]-Rf)/sigmas3[i])
     i = i + 1
   end
-
   m = Model(solver=GurobiSolver(Presolve=0))
   @variable(m,x[1:n])
   @objective(m, Min, x'*Σ*x)
